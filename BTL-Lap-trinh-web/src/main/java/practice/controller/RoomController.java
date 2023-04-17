@@ -20,26 +20,31 @@ import practice.model.Account;
 import practice.model.Room;
 import practice.repository.RoomRepository;
 
-@Slf4j
-@Controller
-@RequestMapping("/room")
+@Slf4j // tự động tạo ra một logger giúp đọc và kiểm tra lại những sự kiện đã xảy ra
+@Controller // DANH SÁCH CÁC PHÒNG
+@RequestMapping("/room") // xử lý yêu cầu HTTP trên đường dẫn "/room" mức class
 public class RoomController {
 
-	@Autowired
+	@Autowired // tự động tiêm các đối tượng để sử dụng các phương thức và thuộc tính
 	private RoomRepository roomRepo;
 
-	@GetMapping
+	// xem danh sách các phòng
+	@GetMapping // xử lý yêu cầu HTTP trên đường dẫn giống mức lớp
 	public String viewList(Model model, HttpSession session) {
+		// lấy danh sách phòng từ csdl rồi đưa vào biến rooms 
 		List<Room> rooms = (List<Room>) roomRepo.findAll();
+		// đưa danh sách phòng vào model để chuển đến view 
 		model.addAttribute("rooms", rooms);
-		return "roomList";
+		return "roomList"; // đến trang roomList.html
 	}
 
-	@GetMapping("/details/{id}")
+	// xem chi tiết 1 phòng sử dụng id 
+	@GetMapping("/details/{id}") // 
 	public String viewDetails(Model model, @PathVariable("id") Long id, HttpSession session) {
-		Room room = roomRepo.findById(id).orElse(null);
+		// @PathVariable("id") Long id - lấy dữ liệu từ id và gán vào biến id
+		Room room = roomRepo.findById(id).orElse(null); // lấy data phòng, đưa vào model 
 		model.addAttribute("room", room);
-		return "roomDetails";
+		return "roomDetails"; // đến trang roomDetails.html 
 	}
 
 }

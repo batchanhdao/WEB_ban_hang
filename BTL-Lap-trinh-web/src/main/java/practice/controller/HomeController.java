@@ -25,8 +25,10 @@ public class HomeController {
 		return "homepage";
 	}
 
+	// đăng nhập hoặc đăng xuất 
 	@GetMapping("/login")// tiếp nhận yêu cầu từ trang /login
 	public String login(HttpSession session) {
+		// nếu có tài khoản thì chuyển đến trang đăng xuất
 		if (session.getAttribute("currentAccount") != null) {
 			return "logout";
 		}
