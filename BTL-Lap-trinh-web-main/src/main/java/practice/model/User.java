@@ -11,16 +11,16 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
-@Data
-@Entity
-@Table(name = "User")
+@Data//tự động tạo các phương thức getter, setter, equals, hashCode và toString cho các thuộc tính của một lớp thông quan thư viện lombok
+@Entity// đánh dấu lớp User là một thực thể
+@Table(name = "User")//User là tên của bảng trong cơ sở dữ liệu mà lớp user ánh xạ đến
 public class User {
 	//thuộc tính id là khóa chính và được tự động sinh ra và tự động tăng bởi hqtcsdl 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	//thuộc tính fullname idCard đều không để giá trị null
+	//thuộc tính fullname idCard phonenumber đều không để giá trị null
 	@NotBlank(message = "Họ tên không để trống")
 	private String fullname;
 	@NotBlank(message = "Mã số CCCD không để trống")
@@ -30,8 +30,8 @@ public class User {
 	
 	private String email;
 	private String address;
-	private String role;
-	private String note;
+	private String role;//thuộc tính role cho biết vai trò của người dùng
+	private String note;// thuộc tính note cho biết những ghi chú thêm về người dùng
 	private Date registeredAt;
 	
 	//thời gian tạo người dùng sẽ được lấy bằng thời gian thực, và được thực hiện trước khi đưa vào csdl
@@ -40,3 +40,5 @@ public class User {
 		this.registeredAt = new Date();
 	}
 }
+
+//User để lưu thông tin người dùng gồm 9 thuộc tính

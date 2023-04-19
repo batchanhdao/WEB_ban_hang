@@ -13,9 +13,10 @@ import javax.validation.constraints.Size;
 
 import lombok.Data;
 
-@Data
-@Entity
-@Table(name = "Account")
+@Data//tự động tạo các phương thức getter, setter, equals, hashCode và toString cho các thuộc tính của một lớp thông quan thư viện lombok
+@Entity// đánh dấu lớp account là một thực thể 
+@Table(name = "Account")//Account là tên của bảng trong cơ sở dữ liệu mà lớp account ánh xạ đến
+
 public class Account {
 	//thuộc tính id là khóa chính và được tự động sinh ra và tự động tăng bởi hqtcsdl 
 	@Id
@@ -29,7 +30,7 @@ public class Account {
 	private String password;
 	
 	private boolean active;//thuộc tính active để biết trạng thái tài khoản có hoạt động hay không
-	private String roles;
+	private String roles;//thuộc tính roles để biết vai trò của tài khoản
 
 	private Date createdAt;//thuôc tính createAt để biết thời gian tài khoản được tạo 
 	
@@ -52,3 +53,5 @@ public class Account {
 		this.createdAt = new Date();
 	}
 }
+
+//account dùng để lưu thông tin tài khoản của người dùng gồm 7 thuộc tính
