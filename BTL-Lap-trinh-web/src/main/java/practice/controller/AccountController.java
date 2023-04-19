@@ -27,7 +27,7 @@ import practice.repository.ClientRepository;
 import practice.repository.UserRepository;
 
 @Slf4j // tự động tạo ra một logger giúp đọc và kiểm tra lại những sự kiện đã xảy ra
-@Controller
+@Controller // tiếp nhận những yêu cầu liên quan đến tài khoản người dùng 
 @RequestMapping("/account") // xử lý yêu cầu HTTP trên đường dẫn "/account" mức class
 //hai thuộc tính "addedUser"-có tk và "addedClient"-ko có tk được lưu trữ trong phiên
 @SessionAttributes({"addedUser", "addedClient"}) 
