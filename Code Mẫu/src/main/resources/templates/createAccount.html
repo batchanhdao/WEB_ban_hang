@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+
+<head>
+	<title>Tao tài khoản</title>	// Tiêu đề trang: "Tạo tài khoản"
+</head>
+
+<body>
+	<h1>Thông tin tài khoản</h1>	// Tiêu đề h1: "Thông tin tài khoản"
+	<form th:action="@{/account/create}" method="post">	// Hiện một form tạo tài khoản từ /account/create URL
+		<table th:object="${account}">	// Bảng gán các giá trị vào đối tượng account
+			<tr>
+				<td th:text="'Tên đăng nhập: '"></td>	// Hiện dòng "Tên đăng nhập: "
+				<td><input type="text" th:field="*{username}"></td>	// Nhập tên đăng nhập, dữ liệu gán vào thuộc tính username
+				<td th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td> // Nếu username nhập không hợp lệ thì thông báo lỗi
+			</tr>
+			<tr>
+				<td th:text="'Mật khẩu: '"></td>	// Hiện dòng "Mật khẩu: "
+				<td><input type="password" th:field="*{password}"></td>	// Nhập mật khẩu, dữ liệu gán vào thuộc tính password
+				<td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>	// Nếu password không hợp lệ thì thông báo lỗi
+			</tr>
+			<tr>
+				<td><input type="submit" value="Đăng kí"></td>	// Nút đăng kí để gửi form
+				<td><button><a th:href="@{/}" th:text="'Trang chủ'"></a></button></td>	// Tạo một nút trang trủ, ấn vào đưa về trang chủ
+			</tr>
+		</table>
+
+	</form>
+</body>
+
+</html>

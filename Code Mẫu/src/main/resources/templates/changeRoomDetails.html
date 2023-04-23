@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Chỉnh sửa phòng</title>	// Tiêu đề trang: "Chỉnh sửa phòng"
+</head>
+
+<body>
+	<h1>Chỉnh sửa thông tin phòng <span th:text="${room.name}"></span></h1> // Tiêu đề h1 "Chỉnh sửa thông tin phòng" + tên phòng
+	<form th:object="${room}" th:action="@{/manage/room/change}" method="post">	// hiện 1 form change từ /manage/room/change URL
+		<table>	// thẻ table mở bảng
+			<tr>
+				<td th:text="'Tên phòng: '" align="left"></td>	// Hiện dòng "Tên phòng: "
+				<td th:text="*{name}"></td>						// tên phòng
+			</tr>
+			<tr>
+				<td th:text="'Loại phòng: '" align="left"></td>	// Hiện dòng "Loại phòng: "
+				<td>	// 2 nút radio để chọn loại phòng, với nút thứ nhất là "Thường" làm mặc định và nút thứ hai là VIP
+					<input type="radio" name="loaiphong" th:field="${room.type}" th:value="'Thường'" th:text="'Thường'"
+						checked>
+					<input type="radio" name="loaiphong" th:field="${room.type}" th:value="'VIP'" th:text="'VIP'">
+				</td>
+			</tr>
+			<tr>
+				<td th:text="'Giá phòng: '" align="left"></td>	// Hiện dòng "Giá phòng: "
+				<td><span><input type="number" th:field="${room.price}"></span><span th:text="'/ngày'"></span></td> // Nhập số tiền phòng / ngày, dữ liệu gán vào thuộc tính room.price
+			</tr>
+			<tr>
+				<td th:text="'Chi tiết: '" align="left"></td>	// Hiện dòng "Chi tiết: "
+				<td><input type="text" th:field="${room.description}"></td> // Nhập text, gắn dữ liệu vào thuộc tính room.description
+			</tr>
+			<tr>
+				<td>
+					<button><a th:href="@{/room}" th:text="'Quay lại'"></a></button>	// Nút "quay lại" để về /room URL
+				</td>
+				<td><input type="submit" value="Xác nhận"></td>	// Nút xác nhận để gửi form
+			</tr>
+		</table>
+	</form>
+
+</body>

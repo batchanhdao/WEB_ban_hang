@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>							// Thẻ mở "head"
+	<title>Tài khoản</title>	// Tiêu đề trang tên: "Tài khoản"
+</head>							// Thẻ đóng "head"
+
+<body>									// Thẻ mở body
+	<div th:if="${account}">			// Nếu đã có sẵn tài khoản thì hiển thị nội dung sau
+		<h1>Thông tin tài khoản</h1>	// Tiêu đề h1: "Thông tin tài khoản"
+
+		<table>		// Thẻ table bắt đầu một bảng
+			<tr>
+				<td th:text="'Username:'"></td>				// Đưa ra dòng "Username: "
+				<td th:text="${account.username}"></td>		// Đưa ra account username của người dùng
+			</tr>
+			
+			<tr>
+				<td th:text="'Họ tên:'"></td>					// Đưa ra dòng "Họ tên: "
+				<td th:text="${account.user.fullname}"></td>	// Đưa ra họ tên của người dùng
+			</tr>
+			
+			<tr>
+				<td th:text="'Vai trò:'"></td>										// Đưa ra dòng "Vai trò: "
+				<td th:switch="${account.roles}">									// Kiểm tra giá trị biến account.roles
+					<span th:case="'ROLE_ADMIN'" th:text="'Admin'"></span>			// Nếu role của account = ADMIN thì hiện "Admin"
+					<span th:case="'ROLE_MANAGER'" th:text="'Quản lý'"></span>		// Nếu role của account = MANAGER thì hiện "Quản lý"
+					<span th:case="*" th:text="'Khách hàng'"></span>				// Nếu role của account không phù hợp bất kì trường hợp
+				</td>																// nào khác thì hiện "Khách hàng"
+			</tr>
+			<tr>
+				<td>
+					<span><button><a th:href="@{logout}" th:text="'Đăng xuất'"></a></button></span> // Tạo một nút đăng xuất, ấn vào sẽ dẫn tới
+				</td>																				// trang đăng xuất
+				<td>
+					<button><span><a th:href="@{/}" th:text="'Trang chủ'"></a></span></button>		// Tạo một nút trang chủ, ấn vào sẽ dẫn tới
+				</td>																				// trang chủ
+			</tr>
+		</table>	// Kết thúc bảng
+
+	</div>
+
+	<div th:unless="${account}">	// Nếu chưa có sẵn tài khoản
+		<h1>Chưa đăng nhập.</h1>	// Tiêu đề h1: "Chưa đăng nhập"
+		<button><a th:href="@{/login}" th:text="'Đăng nhập'"></a></button>			// Tạo một lúc đăng nhập, ấn vào đưa đến trang login
+		<button><span><a th:href="@{/}" th:text="'Trang chủ'"></a></span></button>	// Tạo một nút trang trủ, ấn vào đưa đến trang chủ
+	</div>
+
+
+</body>
+
+</html>

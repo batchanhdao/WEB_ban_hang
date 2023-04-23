@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+
+<head>
+	<title>Tạo tài khoản</title>	// Tiêu đề trang: "Tạo tài khoản"
+</head>
+
+<body>
+	<h1>Thông tin cá nhân</h1>	// Tiêu đề h1: "Thông tin cá nhân"
+	<form th:action="@{/account/submitInfo}" method="post">	// Hiện form từ /account/submitInfo
+		<table th:object="${user}">	// Bảng gán các giá trị vào đối tượng user
+			<tr>
+				<td th:text="'Họ tên: '"></td>	// Hiện dòng "Họ tên: "
+				<td><input type="text" th:field="*{fullname}"></td>	// Nhập họ tên, dữ liệu gán vào thuộc tính fullname
+				<td th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></td>	// Nếu sai thì báo lỗi
+			</tr>
+			<tr>
+				<td th:text="'Căn cước công dân: '"></td>	//	Hiện dòng "Căn cước công dân: "
+				<td><input type="text" th:field="*{idCard}"></td>	// Nhập số thẻ id, dữ liệu gán vào thuộc tính idCard
+				<td th:if="${#fields.hasErrors('idCard')}" th:errors="*{idCard}"></td>	// Nếu sai thì báo lỗi
+			</tr>
+			<tr>
+				<td th:text="'Số điện thoại: '"></td>	// Hiện "Số điện thoại"
+				<td><input type="text" th:field="*{phoneNumber}"></td>	// Nhập số điện thoại, dữ liệu gán vào thuộc tính phone Number
+				<td th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></td>	// Nếu sai thì báo lỗi
+			</tr>
+			<tr>
+				<td th:text="'Email(nếu có): '"></td>	// Hiện dòng "Email(nếu có): "
+				<td><input type="email" th:field="*{email}"></td>	// Nhập email, dữ liệu gán vào thuộc tính email
+			</tr>
+			<tr>
+				<td th:text="'Địa chỉ: '"></td>	// Hiện dòng "Địa chỉ: "
+				<td><input type="text" th:field="*{address}"></td>	//Nhập địa chỉ, dữ liệu gán vào thuộc tính address
+			</tr>
+			<tr>
+				<td><input type="submit" value="Đăng kí"></td>	// Nhân đăng kí để submin form
+				<td><button><a th:href="@{/}" th:text="'Trang chủ'"></a></button></td>	// Tạo một nút trang trủ, ấn vào đưa về trang chủ
+			</tr>
+		</table>
+
+	</form>
+</body>
+
+</html>

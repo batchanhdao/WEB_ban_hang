@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Đặt phòng</title>	// Tiêu đề trang: "Đặt phòng"
+</head>
+
+<body>
+	<h1>Danh sách đặt phòng</h1>	// Tiêu đề h1: "Danh sách đặt phòng"
+	<table>
+		<thead>							// Thẻ mở các cột tiêu đề cho bảng
+			<tr>
+				<th>Số phòng</th>		// Tiêu đề cột 1
+				<th>Loại</th>			// Tiêu đề cột 2
+				<th>Giá phòng</th>		// Tiêu đề cột 3
+				<th>Ngày nhận</th>		// Tiêu đề cột 4
+				<th>Ngày trả</th>		// Tiêu đề cột 5
+				<th>Tổng số tiền</th>	// Tiêu đề cột 6
+				<th>Nhận phòng</th>		// Tiêu đề cột 7
+				<th>Thanh toán</th>		// Tiêu đề cột 8
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="booking:${bookings}">	// Với mỗi phần tử trong danh sách booking, 1 thẻ tr được tạo để hiện thị thông tin của từng đặt phòng
+				<td th:text="${booking.room.name}" align="center"></td>		// hiện tên phòng được đặt
+				<td th:text="${booking.room.type}" align="center"></td>		// hiện loại phòng được đặt
+				<td th:text="${booking.room.price}" align="center"></td>	// hiện giá tiền phòng được đặt
+				<td th:text="${booking.checkin}" align="center"></td>		// hiện thời gian checkin phòng
+				<td th:text="${booking.checkout}" align="center"></td>		// hiện thời gian checkout phòng
+				<td th:text="${booking.totalPrice}" align="center"></td>	// hiện tổng tiền phải chi trả
+
+				<td th:if="${booking.isReceive}" th:text="'Đã nhận phòng'" align="center"></td>	// Nếu phòng đã được nhận thì hiện "Đã nhận phòng"
+				<td th:unless="${booking.isReceive}" th:text="'Chưa nhận phòng'" align="center"></td>	// Nều phòng chưa được nhận thì hiện "Chua nhận phòng"
+
+				<td th:if="${booking.isPaid}" th:text="'Đã thanh toán'" align="center"></td> // Nếu phòng đã được thanh toán thì hiện "Đã thanh toán"
+				<td th:unless="${booking.isPaid}" th:text="'Chưa thanh toán'" align="center"></td>	// Nếu phòng chưa được thanh toán thì hiện "Chưa thanh toán"
+
+				<td>	// Tạo một nút huỷ đặt phòng, đưa đên trang huỷ đặt phòng của phòng đó
+					<button><a th:href="@{/booking/cancel/{id}(id=${booking.id})}" th:text="'Huỷ đặt phòng'"
+							align="center"></a></button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<button><a th:href="@{/}" th:text="'Trang chủ'"></a></button>	// Tạo một nút trang chủ, ấn vào đưa đến trang chủ
+</body>
+
+</html>

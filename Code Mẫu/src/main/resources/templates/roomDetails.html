@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Thông tin phòng</title>	// Tiêu đề trang: "Thông tin phòng"
+</head>
+
+<body>
+	<h1>Thông tin phòng <span th:text="${room.name}"></span></h1>	// Tiêu đề h1: "Thông tin phòng" + tên phòng
+	<table>
+		<tr>
+			<td th:text="'Tên phòng: '" align="left"></td>	// Hiện dòng "Tên phòng: "
+			<td th:text="${room.name}"></td>				// Hiện tên phòng
+		</tr>
+		<tr>
+			<td th:text="'Loại phòng: '" align="left"></td>	// Hiện dòng "Loại phòng: "
+			<td th:text="${room.type}"></td>				// Hiện loại phòng
+		</tr>
+		<tr>
+			<td th:text="'Giá phòng: '" align="left"></td>	// Hiện dòng "Giá phòng"
+			<td th:text="${room.price} + '/ngày'"></td>		// Hiện giá phòng / ngày
+		</tr>
+		<tr>
+			<td th:text="'Chi tiết: '" align="left"></td>	// Hiện dòng "Chi tiết"
+			<td th:if="${room.description}" th:text="${room.description}"></td>	// Nếu có nội dung thì hiện
+		</tr>
+		<tr>
+			<td>
+				<button><a th:href="@{/room}" th:text="'Quay lại'"></a></button>	// Nút Quay lại trở về /room URL
+			</td>
+			<td>
+				<button><a th:href="@{/booking/{id}(id=${room.id})}" th:text="'Đặt phòng'"></a></button>	// Nút Đặt phòng dẫn đến /booking/id URL
+			</td> 
+		</tr>
+	</table>
+
+</body>

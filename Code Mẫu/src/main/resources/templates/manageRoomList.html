@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Danh sách phòng</title>	// Tiêu đề trang: "Danh sách phòng"
+</head>
+
+<body>
+	<h1>Danh sách phòng</h1>	// Tiêu đề h1: "Danh sách phòng"
+	<table>
+		<thead>		// Thẻ mở các cột tiêu đề cho bảng
+			<tr>
+				<th>Số phòng</th>	// Tiêu đề cột 1
+				<th>Loại</th>		// Tiêu đề cột 2
+				<th>Giá phòng</th>	// Tiêu đề cột 3
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="room:${rooms}">	// Với mỗi phần tử trong danh sách room, 1 thẻ tr được tạo để hiện thị thông tin của từng phòng
+				<td th:text="${room.name}" align="center"></td>		// hiện tên phòng
+				<td th:text="${room.type}" align="center"></td>		// hiện loại phòng
+				<td th:text="${room.price}" align="center"></td>	// hiện giá phòng
+				<td>	// Ấn Chi tiết để đến /manage/room/details/id URL
+					<button><a th:href="@{/manage/room/details/{id}(id=${room.id})}" th:text="'Chi tiết'"></a></button>
+				</td>
+				<td>	// Ấn Yêu cầu đặt phòng để để /manage/booking/id để đặt phòng
+					<button><a th:href="@{/manage/booking/{id}(id=${room.id})}"
+							th:text="'Yêu cầu đặt phòng'"></a></button>
+				</td>
+			</tr>
+			<tr>
+				<td><button><a th:href="@{/manage/room/add}" th:text="'Thêm phòng'"></button></td> // Ấn thêm phòng để đến /manage/room/add URL để thêm phòng
+				<td><button><a th:href="@{/}" th:text="'Trang chủ'"></a></button></td>	// Tạo một nút trang chủ, ấn vào về trang chủ
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+</html>

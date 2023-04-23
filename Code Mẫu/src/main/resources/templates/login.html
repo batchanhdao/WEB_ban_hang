@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+
+<head>
+	<title>Login</title>	// Tiêu đề trang: "Login"
+</head>
+
+<body>
+	<h1>Đăng nhập</h1>		// Tiêu đề h1: "Đăng nhập"
+	<form name='f' th:action="login" method="post">	// Hiện một form đăng nhập
+		<table>
+			<tr>
+				<td>Tên đăng nhập: </td>	// Hiện dòng "Tên đăng nhập: "
+				<td><input type="text" name="username" value=""></td>	// Nhập tên đăng nhập
+			</tr>
+			<tr>
+				<td>Mật khẩu: </td>	// Hiện dòng "Mật khẩu"
+				<td><input type="password" name="password"></td>	// Nhập mật khẩu
+			</tr>
+			<tr>
+				<td><input type="submit" value="Đăng nhập"></td>	// Nhấn đăng nhập để submit form
+				<td><button><a th:href="@{/}" th:text="'Trang chủ'"></a></button></td>	// Nút trang chủ để quay về trang chủ
+				<td><button><a th:href="@{/account/submitInfo}" th:text="'Đăng kí tài khoản'"></a></button></td> // Nút Đăng kí tài khoản để đến /account/subminInfo URL
+			</tr>
+		</table>
+	</form>
+</body>
+
+</html>

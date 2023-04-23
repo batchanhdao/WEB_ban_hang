@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>							// Thẻ mở "head"
+	<title>Tài khoản</title>	// Tiêu đề trang: "Tài khoản"
+</head>							// Thẻ đóng "head"
+
+<body>								// Thẻ mở body
+	<h1>Danh sách tài khoản</h1>	// Tiêu đề h1: "Danh sách tài khoản"
+	<table>							// Thẻ table mở bảng
+		<thead>						// Thẻ mở các cột tiêu đề cho bảng
+			<tr>
+				<th>Username</th>	// Tiêu đề cột 1
+				<th>Trạng thái</th>	// Tiêu đề cột 2
+				<th>Vai trò</th>	// Tiêu đề cột 3
+				<th>Ngày tạo</th>	// Tiêu đề cột 4
+				<th>Họ tên</th>		// Tiêu đề cột 5
+				<th>Số CCCD</th>	// Tiêu đề cột 6
+			</tr>
+		</thead>					//
+
+		<tbody>
+			<tr th:each="account:${accounts}">	// Hiện một bảng gồm tất cả các account
+				<td th:text="${account.username}" align="center"></td> // Hiển thị account username
+
+				<td th:if="${account.isActive}" th:text="'Hoạt động'" align="center"></td>	// Nếu tài khoản còn hoạt động thì hiện "Hoạt động"
+				<td th:unless="${account.isActive}" th:text="'Bị khoá'" align="center"></td>// Nếu tài khoảng không còn hoạt động thì hiện
+																							// "Bị khoá"
+				<td th:switch="${account.roles}">									// Kiểm tra giá trị biến account.roles
+					<span th:case="'ROLE_MANAGER'" th:text="'Quản lý'"></span>		// Nếu role của account = MANAGER thì hiện "Quản lý"
+					<span th:case="'ROLE_RECEPTIONIST'" th:text="'Tiếp tân'"></span>// Nếu role của account = RECEPTIONIST thì hiện "Tiếp tân"
+					<span th:case="'ROLE_USER'" th:text="'Khách hàng'"></span>		// Nêu role của account = USER thì hiện "Khách hàng"
+				</td>
+
+				<td th:text="${account.createdAt}" align="center"></td>		// Hiện thời gian account được tạo
+				<td th:text="${account.user.fullname}" align="center"></td>	// Hiện họ và tên của khách hàng
+				<td th:text="${account.user.idCard}" align="center"></td>	// Hiện số ID của khách hàng
+
+				<td th:if="${account.isActive}">		// Nếu account còn hoạt động thì tạo một nút "Khoá" giúp khoá tài khoản
+					<button><a th:href="@{/account/disable/{id}(id=${account.id})}" th:text="'Khoá'"
+							align="center"></a></button>
+				</td>
+				<td th:unless="${account.isActive}">	// Nếu account không còn hoạt động thì tạo một "Khôi phục" giúp khôi phục tài khoản
+					<button><a th:href="@{/account/enable/{id}(id=${account.id})}" th:text="'Khôi phục'"
+							align="center"></a></button>
+				</td>
+				<td>	// Tạo một nút thay đổi, đưa đến 1 trang để thay đổi thông tin tài khoản
+					<button><!-- <a th:href="@{/account/change/{id}(id=${account.id})}" th:text="'Thay đổi'"></a> -->Thay đổi</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<button><a th:href="@{/}" th:text="'Trang chủ'"></a></button>  // Tạo một nút trang chủ, ấn vào đưa đến trang chủ
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+
+<head>
+	<title>Tạo tài khoản</title>	// Tiêu đề trang: "Tạo tài khoản"
+</head>
+
+<body>
+	<h1>Thông tin cá nhân</h1>		// Tiêu đề h1: "Thông tin cá nhân"
+	<form th:action="@{/account/submitClient}" method="post">	// Hiện form tạo tài khoản từ /account/subminClient
+		<table th:object="${client}">	// Bảng gán các giá trị vào đối tượng client
+			<tr>
+				<td th:text="'Tài khoản ngân hàng: '"></td>	// Dòng hiện: "Tài khoản ngân hàng"
+				<td><input type="text" th:field="*{bankAccount}"></td>	// Nhập tài khoản ngân hàng, dữ liệu gán vào thuộc tính bankAccount
+				<td th:if="${#fields.hasErrors('bankAccount')}" th:errors="*{bankAccount}"></td>	// Nếu lỗi thì báo
+			</tr>
+			<tr>
+				<td><input type="submit" value="Đăng kí"></td>	// Nhấn đăng kí để gửi form
+				<td><button><a th:href="@{/}" th:text="'Trang chủ'"></a></button></td>	// Tạo một nút trang trủ, ấn vào đưa về trang chủ
+			</tr>
+		</table>
+
+	</form>
+</body>
+
+</html>

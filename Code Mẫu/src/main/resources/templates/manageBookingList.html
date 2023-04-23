@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Đặt phòng</title>	// Tiêu đề trang "Đặt phòng"
+</head>
+
+<body>
+	<h1>Danh sách đặt phòng</h1>	// Tiều đề h1 "Danh sách đặt phòng"
+	<table>			// Thẻ table mở bảng
+		<thead>		// Thẻ mở các cột tiêu đề cho bảng
+			<tr>
+				<th>Số phòng</th>		// Tiêu đề cột 1
+				<th>Khách hàng</th>		// Tiêu đề cột 2
+				<th>Số CCCD</th>		// Tiêu đề cột 3
+				<th>Loại</th>			// Tiêu đề cột 4
+				<th>Giá phòng</th>		// Tiêu đề cột 5
+				<th>Ngày nhận</th>		// Tiêu đề cột 6
+				<th>Ngày trả</th>		// Tiêu đề cột 7
+				<th>Tổng số tiền</th>	// Tiêu đề cột 8
+				<th>Nhận phòng</th>		// Tiêu đề cột 9
+				<th>Thanh toán</th>		// Tiêu đề cột 10
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="booking:${bookings}">	// Hiện một bảng gồm tất cả các account
+				<td th:text="${booking.room.name}" align="center"></td>				// Hiện tên phòng đặt
+				<td th:text="${booking.client.user.fullname}" align="center"></td>	// Hiện họ và tên khách hàng
+				<td th:text="${booking.client.user.idCard}" align="center"></td>	// Hiện số thẻ ID khách hàng
+				<td th:text="${booking.room.type}" align="center"></td>				// Hiện loại phòng
+				<td th:text="${booking.room.price}" align="center"></td>			// Hiện giá phòng
+				<td th:text="${booking.checkin}" align="center"></td>				// Hiện thời gian checkin
+				<td th:text="${booking.checkout}" align="center"></td>				// Hiện thời gian checkout
+				<td th:text="${booking.totalPrice}" align="center"></td>			// Hiện tổng tiền phải trả
+
+				<td th:if="${booking.isReceive}" th:text="'Đã nhận phòng'" align="center"></td>	// Nếu phòng đã được nhận thì hiện "Đã nhận phòng"
+				<td th:unless="${booking.isReceive}" th:text="'Chưa nhận phòng'" align="center"></td>	// Nều phòng chưa được nhận thì hiện "Chua nhận phòng"
+
+				<td th:if="${booking.isPaid}" th:text="'Đã thanh toán'" align="center"></td>	// Nếu phòng đã được thanh toán thì hiện "Đã thanh toán"
+				<td th:unless="${booking.isPaid}" th:text="'Chưa thanh toán'" align="center"></td>	// Nếu phòng chưa được thanh toán thì hiện "Chưa thanh toán"
+
+				<td>	// Tạo một nút huỷ đặt phòng, đưa đên trang huỷ đặt phòng của phòng đó
+					<button><a th:href="@{/manage/booking/cancel/{id}(id=${booking.id})}" th:text="'Huỷ đặt phòng'"
+							align="center"></a></button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<button><a th:href="@{/}" th:text="'Trang chủ'"></a></button>	// Tạo một nút trang chủ, ấn vào đưa đến trang chủ
+</body>
+
+</html>

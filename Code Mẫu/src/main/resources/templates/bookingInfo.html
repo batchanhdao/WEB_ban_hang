@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Thông tin phòng</title>	// Tiêu đề trang: "Thông tin phòng"
+</head>
+
+<body>
+	<h1>Đặt phòng <span th:text="${room.name}"></span></h1>				// Tiêu đề h1: "Đặt phòng" + số phòng
+	<form th:action="@{/booking}" method="post" th:object="${booking}">	// Hiện 1 form booking từ /booking URL
+	
+		<table>	// Thẻ table mở bảng
+			<tr>
+				<td th:text="'Ngày nhận: '" align="left"></td>	// Hiện dòng "Ngày nhận: "
+				<td>
+					<input type="date" th:field="*{checkin}">	// Nhập ngày, dữ liệu gán vào thuộc tính checkin
+				</td>
+			</tr>
+			<tr>
+				<td th:text="'Ngày trả: '" align="left"></td>	// Hiện dòng "Ngày trả: "
+				<td>
+					<input type="date" th:field="*{checkout}">	// Nhập ngày, dữ liệu gán vào thuộc tính checkout
+				</td>
+			</tr>
+			
+			<tr th:if="${message}">								// Nếu có massage
+				<td colspan="2" th:text="${message}"></td>		// Hiện thỉ nội dung biến message
+			</tr>
+ 		
+			<tr>
+				<td th:text="'Ghi chú: '" align="left"></td>	// Hiện dòng "Ghi chú"
+				<td>
+					<input type="text" th:field="*{note}">		// Nhập ghi chú, dữ liệu gán vào thuộc tính note 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="submit" value="Xác nhận">		// Nút xác nhận để gửi form
+				</td>
+				<td>
+					<button><a th:href="@{/room}" th:text="'Huỷ đặt phòng'"></a></button> // Nút huỷ đặt phòng trả người dùng về /room URL
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+
+</html>
