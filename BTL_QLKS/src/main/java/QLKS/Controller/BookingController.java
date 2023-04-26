@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
 
@@ -79,11 +80,11 @@ public class BookingController {
 		Account account = (Account) session.getAttribute("currentAccount");
 //		lấy thông tin ngày nhận và trả phòng trong currentBooking
 		SimpleDateFormat fomatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date chin = fomatter.parse(currentBooking.getCheckin());
-		Date chout = fomatter.parse(currentBooking.getCheckout());
+		Date dateReceipt = fomatter.parse(currentBooking.getCheckin());
+		Date datePayment = fomatter.parse(currentBooking.getCheckout());
 //		nếu ngày nhận mà lớn hơn hoặc bằng ngày trả thì 
 //		trở lại trang thông tin thuê phòng để điền lại thông tin 
-		if (chin.after(chout) || chin.equals(chout)) {
+		if (dateReceipt.after(datePayment) || dateReceipt.equals(datePayment)) {
 			model.addAttribute("message", "Kiem tra lai thoi gian");
 			model.addAttribute("room", room);
 			return "bookingInfo";
@@ -93,6 +94,11 @@ public class BookingController {
 //		cập nhập thông tin thuê phòng
 		currentBooking.setRoom(room);
 		currentBooking.setClient(client);
+		// tính số milliseconds giữa ngày trả và ngày nhận
+		long diff = datePayment.getTime() - dateReceipt.getTime(); 
+		// chuyển đổi sang số ngày
+		int totalDays = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS); 
+		currentBooking.setTotalPrice(room.getPrice()*totalDays);
 		currentBooking.setReceive(false);
 		currentBooking.setCancelled(false);
 		currentBooking.setPaid(false);

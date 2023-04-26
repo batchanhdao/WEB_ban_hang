@@ -26,7 +26,7 @@
 			<tr>
 				<td th:text="'Vai trò:'"></td>
 				<td th:switch="${account.roles}">
-					<!--<span th:case="'ROLE_ADMIN'" th:text="'Admin'"></span>-->
+					<span th:case="'ROLE_ADMIN'" th:text="'Quản trị viên'"></span>
 					<span th:case="'ROLE_MANAGER'" th:text="'Quản lý'"></span>
 					<span th:case="ROLE_USER" th:text="'Khách hàng'"></span>
 				</td>

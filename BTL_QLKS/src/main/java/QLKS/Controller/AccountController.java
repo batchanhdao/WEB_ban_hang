@@ -128,6 +128,9 @@ public class AccountController {
 		
 		account.setActive(true);
 		account.setRoles("ROLE_USER");
+//		account.setRoles("ROLE_ADMIN");
+//		account.setRoles("ROLE_MANAGER");
+		
 		account.setUser(addedUser);
 		accountRepo.save(account);
 		
@@ -178,6 +181,13 @@ public class AccountController {
 			account.setActive(true);
 			accountRepo.save(account);
 		}
+		return "redirect:/account/list";
+	}
+	@GetMapping("/delete/{id}")
+	public String deleteAccount(@PathVariable("id") Long id) {
+		accountRepo.deleteById(id);
+		userRepo.deleteById(id);
+		clientRepo.deleteById(id);
 		return "redirect:/account/list";
 	}
 
