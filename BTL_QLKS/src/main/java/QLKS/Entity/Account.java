@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
@@ -14,37 +15,30 @@ import javax.validation.constraints.Size;
 import lombok.Data;
 
 
-@Data // tạo get set, lớp rỗng
-@Entity //sử dụng @Entity, để lưu trữ và truy xuất dữ liệu từ csdl
-@Table(name = "Account")//chỉ định tên của bảng dữ liệu "Account" trong csdl
+@Data//tự động tạo các phương thức getter, setter, equals, hashCode và toString cho các thuộc tính của một lớp thông quan thư viện lombok
+@Entity// đánh dấu lớp account là một thực thể 
+@Table(name = "Account")//Account là tên của bảng trong cơ sở dữ liệu mà lớp account ánh xạ đến
+
 public class Account {
-	
+	//thuộc tính id là khóa chính và được tự động sinh ra và tự động tăng bởi hqtcsdl 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Size(min = 5, message = "Tên đăng nhập ít nhất 5 ký tự")
+	//thuộc tính username và password đều phải có ít nhất 5 kí tự
+	@Size(min=5, message = "Tên đăng nhập ít nhất 5 kí tự")
 	private String username;
-	
-	@Size(min = 5, message = "Tên đăng nhập ít nhất 5 ký tự")
+	@Size(min=5, message = "Mật khẩu ít nhất 5 kí tự")
 	private String password;
 	
-	// tài khoản còn hoạt động ko
-	private boolean active;
-	// vai trò của user
-	private String roles;
+	private boolean active;//thuộc tính active để biết trạng thái tài khoản có hoạt động hay không
+	private String roles;//thuộc tính roles để biết vai trò của tài khoản
+
+	private Date createdAt;//thuôc tính createAt để biết thời gian tài khoản được tạo 
 	
-	private Date createdAt;
-	
-	// quan hệ account với user là n-1
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.MERGE)
-	private User user;
-	
-	@PrePersist
-	private void createdAt() {
-		this.createdAt = new Date();
-	}
-	
+	private User user;//thuộc tính user là khóa ngoại 1 user có thể có nhiều tài khoản
+
 	public void setup(Account account2) {
 		this.id = account2.id;
 		this.username = account2.username;
@@ -54,5 +48,12 @@ public class Account {
 		this.createdAt = account2.getCreatedAt();
 		this.user = account2.getUser();
 	}
-
+	
+	//thời gian tạo tài khoản sẽ được lấy bằng thời gian thực, và được thực hiện trước khi đưa vào csdl
+	@PrePersist
+	private void createdAt() {
+		this.createdAt = new Date();
+	}
 }
+
+//account dùng để lưu thông tin tài khoản của người dùng gồm 7 thuộc tính
