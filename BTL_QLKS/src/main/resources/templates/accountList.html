@@ -45,6 +45,10 @@
 							align="center"></a></button>
 				</td>
 				<td>
+					<button><a th:href="@{/account/role/{id}(id=${account.id})}" th:text="'Change role'">
+					</a></button>
+				</td>
+				<td>
 					<button><a th:href="@{/account/delete/{id}(id=${account.id})}" th:text="'Xóa Tài Khoản'">
 					</a></button>
 				</td>

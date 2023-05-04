@@ -127,18 +127,12 @@ public class AccountController {
 		userRepo.save(addedUser);
 		
 		account.setActive(true);
-		account.setRoles("ROLE_USER");
-//		account.setRoles("ROLE_ADMIN");
-//		account.setRoles("ROLE_MANAGER");
-		
+		account.setRoles("ROLE_USER");		
 		account.setUser(addedUser);
 		accountRepo.save(account);
 		
 		addedClient.setUser(addedUser);
 		clientRepo.save(addedClient);
-//		log.info("Account: " + account);
-//		log.info("User: " + addedUser);
-//		log.info("Client: " + addedClient);
 		return "redirect:/"; // chuyển hướng đến hàm getMapping("/")
 	}
 
@@ -186,8 +180,19 @@ public class AccountController {
 	@GetMapping("/delete/{id}")
 	public String deleteAccount(@PathVariable("id") Long id) {
 		accountRepo.deleteById(id);
-		userRepo.deleteById(id);
-		clientRepo.deleteById(id);
+		return "redirect:/account/list";
+	}
+	@GetMapping("/role/{id}")
+	public String roleAccount(@PathVariable("id") Long id) {
+		Account account = accountRepo.findById(id).orElse(null);
+		if (account.getRoles().equals("ROLE_MANAGER")==true) {
+			account.setRoles("ROLE_USER");
+			accountRepo.save(account);
+		}
+		else {
+			account.setRoles("ROLE_MANAGER");
+			accountRepo.save(account);
+		}
 		return "redirect:/account/list";
 	}
 
