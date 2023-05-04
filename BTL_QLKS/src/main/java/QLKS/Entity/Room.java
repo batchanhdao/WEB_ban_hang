@@ -8,20 +8,22 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-@Data//tự động tạo các phương thức getter, setter, equals, hashCode và toString cho các thuộc tính của một lớp thông quan thư viện lombok
-@Entity// đánh dấu lớp Room là một thực thể
-@Table(name = "Room")//Booking là tên của bảng trong cơ sở dữ liệu mà lớp room ánh xạ đến
+@Data
+@Entity
+@Table(name = "Room")
 public class Room {
-	//thuộc tính id là khóa chính và được tự động sinh ra và tự động tăng bởi hqtcsdl
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String name;
+	private String type;
+	private Long price;
+	private String description;
 	
-	private String name;// tên phòng
-	private String type;// kiểu phòng
-	private Long price;// giá phòng
-	private String description;// miêu tả phòng
+//	private Date addedAt;
+	
+//	@ManyToOne(targetEntity = Manager.class, cascade = CascadeType.MERGE)
+//	private Manager addedBy;
 	
 }
-
-//Room để lưu thông tin các phòng gồm 5 thuộc tính
