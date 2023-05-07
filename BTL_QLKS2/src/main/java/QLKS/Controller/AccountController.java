@@ -112,6 +112,26 @@ public class AccountController {
 		model.addAttribute("account", new Account());
 		return "createAccount"; // đến trang createAccount.html - trang đăng nhập
 	}
+	
+	@PostMapping("/change") // tiếp nhận data thay đổi tài khoản trong SessionAttribute("currentAccount")
+	public String confirmChange(Account account, @SessionAttribute("currentAccount") Account currentAccount) {
+//		cập nhập các thông tintài khoản người dùng rồi lưu vào csdl
+//		Cập nhật thông tin của tài khoản và người dùng trong updatedAccount
+		currentAccount.setUsername(account.getUsername());
+		currentAccount.getUser().setFullname(account.getUser().getFullname());
+		currentAccount.getUser().setEmail(account.getUser().getEmail());
+		currentAccount.getUser().setPhoneNumber(account.getUser().getPhoneNumber());
+		currentAccount.getUser().setAddress(account.getUser().getAddress());
+		    
+		// Lưu updatedAccount vào cơ sở dữ liệu
+		accountRepo.save(currentAccount);
+		    
+		// Cập nhật đối tượng user tương ứng trong userRepo
+		userRepo.save(currentAccount.getUser());
+		
+		return "redirect:/account";
+		
+	}
 
 	//sử dụng để nhận thông tin đăng nhập
 	@PostMapping("/create")// nhận data từ đường dẫn "account/create"

@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import QLKS.Entity.Room;
 import QLKS.Repository.RoomRepository;
 
-@Controller // điều khiển chức năng thêm sửa xóa phòng 
-@RequestMapping("/manage/room")// xử lý yêu cầu HTTP trên đường dẫn "/manage/room" mức class
+@Controller // điều khiển chức năng thêm sửa xóa phòng
+@RequestMapping("/manage/room") // xử lý yêu cầu HTTP trên đường dẫn "/manage/room" mức class
 @SessionAttributes("alteredRoom") // thuộc tính "alteredRoom" - được lưu trữ trong phiên
 public class ManageRoomController {
 
-	@Autowired // tự động tiêm các đối tượng để sử dụng các phương thức và thuộc tính 
+	@Autowired // tự động tiêm các đối tượng để sử dụng các phương thức và thuộc tính
 	private RoomRepository roomRepo;
 
 //	@ModelAttribute sử dụng để xác định một phương thức trả về đối tượng
@@ -36,13 +36,12 @@ public class ManageRoomController {
 		// lấy danh sách các phòng trong csdl rồi thêm vào model
 		List<Room> rooms = (List<Room>) roomRepo.findAll();
 		model.addAttribute("rooms", rooms);
-		return "manageRoomList"; // chuyển đến trang danh sách các phòng 
+		return "manageRoomList"; // chuyển đến trang danh sách các phòng
 	}
-	
+
 //	xem chi tiết phòng 
 	@GetMapping("/details/{id}") // xử lý yêu cầu HTTP trên đường dẫn "/manage/room/details/{id}"
-	public String manageRoomDetails(Model model, 
-			@PathVariable("id") Long id) {
+	public String manageRoomDetails(Model model, @PathVariable("id") Long id) {
 //		tìm phòng theo id trong csdl và thêm vào model
 		Room room = roomRepo.findById(id).orElse(null);
 		model.addAttribute("room", room);
@@ -51,12 +50,11 @@ public class ManageRoomController {
 
 //	thay đổi thông tin phòng theo id
 	@GetMapping("/change/{id}") // xử lý yêu cầu HTTP trên đường dẫn "/manage/room/change/{id}"
-	public String changeRoomInfo(Model model, 
-			@PathVariable("id") Long id,
+	public String changeRoomInfo(Model model, @PathVariable("id") Long id,
 			@SessionAttribute("alteredRoom") Room alteredroom) {
 //		tìm phòng theo id trong csdl
 		Room room = roomRepo.findById(id).orElse(null);
-		if (room != null) { //nếu có phòng thì cập nhập id và tên phòng vào alteredroom trong session
+		if (room != null) { // nếu có phòng thì cập nhập id và tên phòng vào alteredroom trong session
 			alteredroom.setId(room.getId());
 			alteredroom.setName(room.getName());
 		}
@@ -66,8 +64,7 @@ public class ManageRoomController {
 	}
 
 	@PostMapping("/change") // tiếp nhận data thay đổi phòng trong SessionAttribute("alteredRoom")
-	public String confirmChange(Room room, 
-			@SessionAttribute("alteredRoom") Room alteredroom) {
+	public String confirmChange(Room room, @SessionAttribute("alteredRoom") Room alteredroom) {
 //		cập nhập các thông tin như giá, loại phòng rồi lưu vào csdl
 		alteredroom.setPrice(room.getPrice());
 		alteredroom.setType(room.getType());
@@ -75,15 +72,15 @@ public class ManageRoomController {
 		roomRepo.save(alteredroom);
 		return "redirect:/manage/room"; // chuyển đến phương thức manageRoomFrm()
 	}
-	
+
 //	tiếp nhận yêu cầu thêm phòng
-	@GetMapping("/add") // xử lý yêu cầu HTTP trên đường dẫn "/manage/room/add" 
+	@GetMapping("/add") // xử lý yêu cầu HTTP trên đường dẫn "/manage/room/add"
 	public String addRoom(Model model) {
 //		khởi tạo 1 class Room() rỗng rồi lưu vào model để chuyển đến cho view
 		model.addAttribute("room", new Room());
 		return "manageAddRoom";
 	}
-	
+
 //	tiếp nhận data từ đường dẫn "/manage/room/add"
 	@PostMapping("/add")
 	public String saveRoom(Room room) { // lưu vào csdl rồi chuyển đến phương thức manageRoomFrm()
@@ -91,5 +88,13 @@ public class ManageRoomController {
 		roomRepo.save(room);
 		return "redirect:/manage/room";
 	}
-	
+
+	// tiếp nhận yêu cầu xóa phòng
+	@GetMapping("/delete/{id}")
+	public String deleteRoom(@PathVariable("id") Long id) {
+		roomRepo.deleteById(id);
+		return "redirect:/manage/room";
+
+	}
+
 }
