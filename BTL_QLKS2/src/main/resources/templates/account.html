@@ -45,20 +45,18 @@
 				</tr>
 				<tr>
 					<td>
+						<span><button><a th:href="@{logout}" th:text="'Đăng xuất'"></a></button></span>
+					</td>
+					<td>
 						<input type="submit" value="Chỉnh Sửa">
 					</td>
 				</tr>
+				
 			</table>
 		</form>
-		<table>
-			<tr>
-				<td>
-					<span><button><a th:href="@{logout}" th:text="'Đăng xuất'"></a></button></span>
-				</td>
-			</tr>
-		</table>
+		<div><span th:text="${message}"></span></div>
 	</div>
-
+	
 	<!--Nếu không có tài khoản-->
 	<div th:unless="${account}">
 		<h1>Chưa đăng nhập.</h1>

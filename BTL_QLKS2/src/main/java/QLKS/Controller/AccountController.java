@@ -32,6 +32,7 @@ import QLKS.Entity.Client;
 //hai thuộc tính "addedUser" tức có tk và "addedClient" tức ko có tk được lưu trữ trong phiên
 @SessionAttributes({ "addedUser", "addedClient" })
 public class AccountController {
+	boolean changeInfo = false;
 
 	@Autowired // tự động tiêm các đối tượng để sử dụng các phương thức và thuộc tính 
 	private AccountRepository accountRepo;
@@ -68,6 +69,11 @@ public class AccountController {
 			// lấy trong tài khoản User hiện tại rồi lưu vào model, đặt tên là account
 			model.addAttribute("account", account); 
 		}
+		if(changeInfo) {
+			model.addAttribute("message", "Thông tin tài khoản đã được thay đổi");
+			changeInfo=false;
+		}
+	    
 		return "account"; // đến trang account.html
 	}
 
@@ -114,7 +120,8 @@ public class AccountController {
 	}
 	
 	@PostMapping("/change") // tiếp nhận data thay đổi tài khoản trong SessionAttribute("currentAccount")
-	public String confirmChange(Account account, @SessionAttribute("currentAccount") Account currentAccount) {
+	public String confirmChange(Model model, Account account
+			, @SessionAttribute("currentAccount") Account currentAccount) {
 //		cập nhập các thông tintài khoản người dùng rồi lưu vào csdl
 //		Cập nhật thông tin của tài khoản và người dùng trong updatedAccount
 		currentAccount.setUsername(account.getUsername());
@@ -129,8 +136,9 @@ public class AccountController {
 		// Cập nhật đối tượng user tương ứng trong userRepo
 		userRepo.save(currentAccount.getUser());
 		
-		return "redirect:/account";
+		changeInfo=true;
 		
+		return "redirect:/account";
 	}
 
 	//sử dụng để nhận thông tin đăng nhập
