@@ -207,7 +207,11 @@ public class AccountController {
 	}
 	@GetMapping("/delete/{id}")
 	public String deleteAccount(@PathVariable("id") Long id) {
+		Account account = accountRepo.findById(id).orElse(null);
+		Long userId = account.getUser().getId();
 		accountRepo.deleteById(id);
+		clientRepo.deleteById(id);
+		userRepo.deleteById(userId);
 		return "redirect:/account/list";
 	}
 	@GetMapping("/role/{id}")
