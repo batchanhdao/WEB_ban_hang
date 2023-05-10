@@ -3,11 +3,12 @@
 
 <head>
 	<title>Login</title>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<style th:include="styles.html"></style>
 </head>
 
 <body>
-	<li><a th:href="@{/}" th:text="'Trang chủ'"></a></li>
+	<h3><a th:href="@{/}" th:text="'Trang chủ'"></a></h3>
 	<h1>Đăng Nhập</h1>
 	<form th:action="login" method="post">
 		<table>

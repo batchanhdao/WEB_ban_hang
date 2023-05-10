@@ -3,6 +3,8 @@
 
 <head>
 	<title>Tao tai khoan</title>
+	<meta charset="utf-8">
+	<style th:include="styles.html"></style>
 </head>
 
 <body>
@@ -33,7 +35,7 @@
 				<td><input type="text" th:field="*{address}"></td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="Đăng kí"></td>
+				<td><input type="submit" id="bt" value="Đăng kí"></td>
 				<td><button><a th:href="@{/}" th:text="'Trang chủ'"></a></button></td>
 			</tr>
 		</table>

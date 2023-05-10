@@ -56,7 +56,10 @@ public class BookingController {
 			// @PathVariable("id") Long id - lấy dữ liệu từ id và gán vào biến id
 			@PathVariable("id") Long id, 
 			// @ModelAttribute("currentRoom") Room room) - lấy dữ liệu trong currentRoom và gán vào biến room
-			@ModelAttribute("currentRoom") Room room) {
+			@ModelAttribute("currentRoom") Room room, HttpSession session) {
+		if (session.getAttribute("currentAccount") == null) {
+			return "login";
+		}
 		Booking booking = new Booking();
 		Room room2 = roomRepo.findById(id).orElse(null); // tìm phòng theo id trong csdl - orElse(null) nếu ko có thì = null
 		if (room2 != null) { // nếu có phòng thì cập nhập cào biến room 

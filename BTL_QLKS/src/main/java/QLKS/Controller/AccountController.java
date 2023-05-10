@@ -32,6 +32,7 @@ import QLKS.Entity.Client;
 //hai thuộc tính "addedUser" tức có tk và "addedClient" tức ko có tk được lưu trữ trong phiên
 @SessionAttributes({ "addedUser", "addedClient" })
 public class AccountController {
+	boolean changeInfo = false;
 
 	@Autowired // tự động tiêm các đối tượng để sử dụng các phương thức và thuộc tính 
 	private AccountRepository accountRepo;
@@ -68,6 +69,11 @@ public class AccountController {
 			// lấy trong tài khoản User hiện tại rồi lưu vào model, đặt tên là account
 			model.addAttribute("account", account); 
 		}
+		if(changeInfo) {
+			model.addAttribute("message", "Thông tin tài khoản đã được thay đổi");
+			changeInfo=false;
+		}
+	    
 		return "account"; // đến trang account.html
 	}
 
@@ -111,6 +117,28 @@ public class AccountController {
 		addedClient.setNote(client.getNote());
 		model.addAttribute("account", new Account());
 		return "createAccount"; // đến trang createAccount.html - trang đăng nhập
+	}
+	
+	@PostMapping("/change") // tiếp nhận data thay đổi tài khoản trong SessionAttribute("currentAccount")
+	public String confirmChange(Model model, Account account
+			, @SessionAttribute("currentAccount") Account currentAccount) {
+//		cập nhập các thông tintài khoản người dùng rồi lưu vào csdl
+//		Cập nhật thông tin của tài khoản và người dùng trong updatedAccount
+		currentAccount.setUsername(account.getUsername());
+		currentAccount.getUser().setFullname(account.getUser().getFullname());
+		currentAccount.getUser().setEmail(account.getUser().getEmail());
+		currentAccount.getUser().setPhoneNumber(account.getUser().getPhoneNumber());
+		currentAccount.getUser().setAddress(account.getUser().getAddress());
+		    
+		// Lưu updatedAccount vào cơ sở dữ liệu
+		accountRepo.save(currentAccount);
+		    
+		// Cập nhật đối tượng user tương ứng trong userRepo
+		userRepo.save(currentAccount.getUser());
+		
+		changeInfo=true;
+		
+		return "redirect:/account";
 	}
 
 	//sử dụng để nhận thông tin đăng nhập
@@ -179,7 +207,11 @@ public class AccountController {
 	}
 	@GetMapping("/delete/{id}")
 	public String deleteAccount(@PathVariable("id") Long id) {
+		Account account = accountRepo.findById(id).orElse(null);
+		Long userId = account.getUser().getId();
 		accountRepo.deleteById(id);
+		clientRepo.deleteById(id);
+		userRepo.deleteById(userId);
 		return "redirect:/account/list";
 	}
 	@GetMapping("/role/{id}")

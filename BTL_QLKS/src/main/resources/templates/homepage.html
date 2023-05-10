@@ -3,13 +3,12 @@
 <head>
 	<title>Home page</title>
 	<meta charset="UTF-8">
+	<style th:include="styles.html"></style>
 </head>
 
 <body>
 	<h1>Nhóm 18 Welcome <span th:if="${account}" th:text="${account.username}"></span><span>!</span></h1>
-
 	<ul>
-		<li><a th:href="@{/}">Home</a></li>
 		<span th:if="${account}" th:switch="${account.roles}">
 			<span th:case="ROLE_USER">
 				<li><a th:href="@{/room}" th:text="'Xem danh sách các phòng'"></a></li>
@@ -20,7 +19,6 @@
 			</span>
 			<span th:case="ROLE_MANAGER">
 				<li><a th:href="@{/manage/room}" th:text="'Quản lý phòng'"></a></li>
-				<!-- <td><button><a th:href="@{/manage/booking}" th:text="'Yêu cầu đặt phòng'"></a></button></td> -->
 			</span>
 		</span>
 		<span th:unless="${account}">

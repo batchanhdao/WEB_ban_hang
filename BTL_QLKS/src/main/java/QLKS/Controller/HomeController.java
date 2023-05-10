@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-//import QLKS.Entity.Account;
 
 @Controller
 public class HomeController {
@@ -20,10 +19,6 @@ public class HomeController {
 		// tìm đến trang giao diện homepage.html
 		return "homepage";
 	}
-//	@GetMapping("/")
-//	public String home() {
-//		return "homepage";
-//	}
 
 	@GetMapping("/login") // tiếp nhận yêu cầu từ trang /login
 	public String login(HttpSession session) {
@@ -32,25 +27,11 @@ public class HomeController {
 		}
 		return "login";
 	}
-//	@GetMapping("/login")
-//	public String login() {
-//		return "login";
-//	}
 
 	@GetMapping("/logout") // tiếp nhận yêu cầu từ trang /logout
 	public String logout(HttpSession session) {
-//		lấy data trong session với name là currentAccount
-//		kiểu dữ liệu là Account 
-//		Account account = (Account) session.getAttribute("currentAccount");
-//		if (account != null) { // nếu tồn tại thì ghi lại vào log
-//			log.info("Log out: " + account);
-//		}
-//		nếu không thì chạy đến trang logout
 		return "logout";
 	}
-//	@GetMapping("/logout")
-//	public String logout() {
-//		return "logout";
-//	}
+
 	
 }

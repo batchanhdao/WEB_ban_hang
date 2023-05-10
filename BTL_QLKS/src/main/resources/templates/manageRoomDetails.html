@@ -3,6 +3,8 @@
 
 <head>
 	<title>Thông tin phòng</title>
+	<meta charset="utf-8">
+	<style th:include="styles.html"></style>
 </head>
 
 <body>
@@ -30,7 +32,10 @@
 			</td>
 			<td>
 				<button><a th:href="@{/manage/room/change/{id}(id=${room.id})}" th:text="'Chỉnh sửa'"></a></button>
-			</td> 
+			</td>
+			<td>
+				<button><a th:href="@{/manage/room/delete/{id}(id=${room.id})}" th:text="'Xóa phòng'"></a></button>
+			</td>
 		</tr>
 	</table>
 
