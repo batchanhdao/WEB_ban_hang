@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity // cho phép Spring Security sử dụng các cấu hình bảo mật
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
-	@Autowired // tự động tiêm các đối tượng để sử dụng các phương thức và thuộc tính 
+	@Autowired 
 	UserDetailsService userDetailsService;
 	
 	//Phương thức configure(AuthenticationManagerBuilder auth) được sử dụng 

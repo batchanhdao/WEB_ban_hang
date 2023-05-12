@@ -14,28 +14,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import QLKS.Entity.Room;
 import QLKS.Repository.RoomRepository;
 
-@Controller // DANH SÁCH CÁC PHÒNG
-@RequestMapping("/room") // xử lý yêu cầu HTTP trên đường dẫn "/room" mức class
+@Controller
+@RequestMapping("/room") 
 public class RoomController {
-	@Autowired // tự động tiêm các đối tượng để sử dụng các phương thức và thuộc tính
+	@Autowired
 	private RoomRepository roomRepo;
 
 	// xem danh sách các phòng
 	@GetMapping // xử lý yêu cầu HTTP trên đường dẫn giống mức lớp
 	public String viewList(Model model, HttpSession session) {
-		// lấy danh sách phòng từ csdl rồi đưa vào biến rooms 
 		List<Room> rooms = (List<Room>) roomRepo.findAll();
-		// đưa danh sách phòng vào model để chuển đến view 
 		model.addAttribute("rooms", rooms);
-		return "roomList"; // đến trang roomList.html
+		return "roomList"; 
 	}
 
 	// xem chi tiết 1 phòng sử dụng id 
 	@GetMapping("/details/{id}") // 
 	public String viewDetails(Model model, @PathVariable("id") Long id, HttpSession session) {
-		// @PathVariable("id") Long id - lấy dữ liệu từ id và gán vào biến id
-		Room room = roomRepo.findById(id).orElse(null); // lấy data phòng, đưa vào model 
+		Room room = roomRepo.findById(id).orElse(null); 
 		model.addAttribute("room", room);
-		return "roomDetails"; // đến trang roomDetails.html 
+		return "roomDetails";
 	}
 }
